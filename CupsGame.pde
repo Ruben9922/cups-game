@@ -3,17 +3,30 @@ void setup() {
 }
 
 void draw() {
+  final int CUP_COUNT = 3;
+  final int CUP_SPACING = 200; // Distance between centre of top of each cup
+
   background(50);
   lights();
 
   noStroke();
   fill(200);
   translate(width / 2, height / 2, 0);
+
+  pushMatrix();
   rotateX(-9 * PI / 16);
-  drawConicalFrustum(50, 150, 50, 75);
+  ArrayList<Cup> cups = new ArrayList<Cup>(3);
+  translate(-(CUP_COUNT - 1) * CUP_SPACING / 2, 0, 0);
+  for (int i = 0; i < CUP_COUNT; i++) {
+    Cup cup = new Cup();
+    cup.draw();
+    cups.add(cup);
+    translate(CUP_SPACING, 0, 0);
+  }
+  popMatrix();
 }
 
-void drawConicalFrustum(int sides, float height, float topRadius, float bottomRadius) {
+void drawConicalFrustum(int sides, float height, float topRadius, float bottomRadius, boolean topOpen, boolean bottomOpen) {
   float centralAngle = 360 / (float)sides;
   float[][] topVertices = new float[sides][2]; // Store vertices in array to save recalculating them
   float[][] bottomVertices = new float[sides][2];
@@ -39,23 +52,27 @@ void drawConicalFrustum(int sides, float height, float topRadius, float bottomRa
   endShape();
 
   // Draw top
-  beginShape();
-  for (int i = 0; i < topVertices.length; i++) {
-    float x = topVertices[i][0];
-    float y = topVertices[i][1];
-    vertex(x, y, 0);
+  if (!topOpen) {
+    beginShape();
+    for (int i = 0; i < topVertices.length; i++) {
+      float x = topVertices[i][0];
+      float y = topVertices[i][1];
+      vertex(x, y, 0);
+    }
+    endShape();
   }
-  endShape();
 
   // Draw bottom
-  beginShape();
-  translate(0, 0, height);
-  for (int i = 0; i < bottomVertices.length; i++) {
-    float x = bottomVertices[i][0];
-    float y = bottomVertices[i][1];
-    vertex(x, y, 0);
+  if (!bottomOpen) {
+    beginShape();
+    translate(0, 0, height);
+    for (int i = 0; i < bottomVertices.length; i++) {
+      float x = bottomVertices[i][0];
+      float y = bottomVertices[i][1];
+      vertex(x, y, 0);
+    }
+    endShape();
   }
-  endShape();
 
   popMatrix();
 }
