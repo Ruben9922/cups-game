@@ -10,7 +10,7 @@ void setup() {
 
   PShape cupShape = shapes.createConicalFrustum(50, 150, 50, 75, false, true);
   cupShape.setStroke(false);
-  cupShape.setFill(color(200));
+  cupShape.setFill(color(179, 0, 0));
   for (int i = 0; i < CUP_COUNT; i++) {
     Cup cup = new Cup(cupShape);
     cups.add(cup);
