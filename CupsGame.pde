@@ -1,13 +1,23 @@
+final int CUP_COUNT = 3;
+final int CUP_SPACING = 200; // Distance between centre of top of each cup
+
+ArrayList<Cup> cups = new ArrayList<Cup>(CUP_COUNT);
+
 void setup() {
   size(800, 600, P3D);
-}
-
-void draw() {
-  final int CUP_COUNT = 3;
-  final int CUP_SPACING = 200; // Distance between centre of top of each cup
 
   Shapes shapes = new Shapes();
 
+  PShape cupShape = shapes.createConicalFrustum(50, 150, 50, 75, false, true);
+  cupShape.setStroke(false);
+  cupShape.setFill(color(200));
+  for (int i = 0; i < CUP_COUNT; i++) {
+    Cup cup = new Cup(cupShape);
+    cups.add(cup);
+  }
+}
+
+void draw() {
   background(50);
   lights();
 
@@ -15,15 +25,9 @@ void draw() {
 
   pushMatrix();
   rotateX(-9 * PI / 16);
-  ArrayList<Cup> cups = new ArrayList<Cup>(CUP_COUNT);
-  PShape cupShape = shapes.createConicalFrustum(50, 150, 50, 75, false, true);
-  cupShape.setStroke(false);
-  cupShape.setFill(color(200));
   translate(-(CUP_COUNT - 1) * CUP_SPACING / 2, 0, 0);
-  for (int i = 0; i < CUP_COUNT; i++) {
-    Cup cup = new Cup(cupShape);
+  for (Cup cup : cups) {
     cup.draw();
-    cups.add(cup);
     translate(CUP_SPACING, 0, 0);
   }
 
