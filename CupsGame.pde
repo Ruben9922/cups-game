@@ -15,7 +15,7 @@ void draw() {
 
   pushMatrix();
   rotateX(-9 * PI / 16);
-  ArrayList<Cup> cups = new ArrayList<Cup>(3);
+  ArrayList<Cup> cups = new ArrayList<Cup>(CUP_COUNT);
   PShape cupShape = shapes.createConicalFrustum(50, 150, 50, 75, false, true);
   cupShape.setStroke(false);
   cupShape.setFill(color(200));
