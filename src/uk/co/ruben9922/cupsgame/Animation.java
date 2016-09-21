@@ -8,7 +8,7 @@ class Animation {
     private int time = 0;
     private float beginning;
     private float change;
-    private float duration;
+    private int duration;
 
     Animation(EasingFunction easingFunction, PVector vector, float beginning, float change, int duration) {
         this.easingFunction = easingFunction;
