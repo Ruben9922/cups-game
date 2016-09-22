@@ -44,12 +44,12 @@ class Animation {
 
     public void updateVectorComponents() {
         easingFunction.setVectorComponents(vector, time, beginning, change, duration);
-        if (!hasFinished()) {
+        if (!isFinished()) {
             time++;
         }
     }
 
-    public boolean hasFinished() {
+    public boolean isFinished() {
         return time >= duration;
     }
 }

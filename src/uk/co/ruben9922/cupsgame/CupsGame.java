@@ -9,7 +9,8 @@ public class CupsGame extends PApplet {
     private final int CUP_COUNT = 3;
     private final int CUP_SPACING = 200; // Distance between centre of top of each cup
 
-    private ArrayList<Cup> cups;
+    private ArrayList<Cup> cups = new ArrayList<>(CUP_COUNT);
+    private ArrayList<Delay> delays = new ArrayList<>(CUP_COUNT);
 
     public static void main(String[] args) {
         PApplet.main("uk.co.ruben9922.cupsgame.CupsGame");
@@ -22,7 +23,6 @@ public class CupsGame extends PApplet {
     public void setup() {
         Shapes shapes = new Shapes(this);
 
-        cups = new ArrayList<>(CUP_COUNT);
         PShape cupShape = shapes.createConicalFrustum(50, 150, 50, 75, false, true);
         cupShape.rotateX(-PApplet.PI / 16);
         cupShape.setStroke(false);
@@ -51,11 +51,21 @@ public class CupsGame extends PApplet {
             cup.draw();
         }
         popMatrix();
+
+        updateDelays();
     }
 
     private void revealAllCups() {
-        for (Cup cup : cups) {
-            cup.reveal();
+        final int CUP_DELAY = 20;
+        for (int i = 0; i < cups.size(); i++) {
+            Cup cup = cups.get(i);
+            delays.add(new Delay(cup::reveal, CUP_DELAY * i));
+        }
+    }
+
+    private void updateDelays() {
+        for (Delay delay : delays) {
+            delay.updateTime();
         }
     }
 }

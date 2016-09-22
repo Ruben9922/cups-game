@@ -36,7 +36,7 @@ class Cup {
         if (currentAnimation != null) {
             currentAnimation.updateVectorComponents();
 
-            if (currentAnimation.hasFinished()) {
+            if (currentAnimation.isFinished()) {
                 animationQueue.poll();
             }
         }
