@@ -24,10 +24,14 @@ class Delay {
     }
 
     public void updateTime() {
-        boolean isCurrentlyFinished = isFinished();
-        if (!isCurrentlyFinished) {
+        // Increment time if not finished
+        if (!isFinished()) {
             time++;
-        } else if (!hasFinished) {
+        }
+
+        // Run onFinish function if finished and not already finished
+        boolean isCurrentlyFinished = isFinished();
+        if (isCurrentlyFinished && !hasFinished) {
             onFinish.run();
         }
         hasFinished = isCurrentlyFinished;
