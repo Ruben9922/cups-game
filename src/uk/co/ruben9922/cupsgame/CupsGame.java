@@ -2,6 +2,7 @@ package uk.co.ruben9922.cupsgame;
 
 import processing.core.PApplet;
 import processing.core.PShape;
+import processing.core.PVector;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class CupsGame extends PApplet {
         cupShape.setStroke(false);
         cupShape.setFill(color(179, 0, 0));
         for (int i = 0; i < CUP_COUNT; i++) {
-            Cup cup = new Cup(this, cupShape, i);
+            Cup cup = new Cup(this, cupShape, new PVector(CUP_SPACING * i, 0, 0), i);
             cups.add(cup);
         }
         revealAllCups();
@@ -42,11 +43,7 @@ public class CupsGame extends PApplet {
 
         pushMatrix();
         translate(-(CUP_COUNT - 1) * CUP_SPACING / 2, 0, 0);
-        for (int i = 0; i < cups.size(); i++) {
-            if (i != 0) {
-                translate(CUP_SPACING, 0, 0);
-            }
-            Cup cup = cups.get(i);
+        for (Cup cup : cups) {
             cup.updatePosition();
             cup.draw();
         }

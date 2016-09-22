@@ -11,18 +11,21 @@ import java.util.Queue;
 class Cup {
     private PApplet parent;
     private PShape shape;
-    private int number;
+    private PVector normalPosition;
     private PVector position = new PVector(0, 0, 0);
+    private int number;
     private Queue<Animation> animationQueue = new ArrayDeque<>();
 
-    Cup(PApplet parent, PShape shape, int number) {
+    Cup(PApplet parent, PShape shape, PVector normalPosition, int number) {
         this.parent = parent;
         this.shape = shape;
+        this.normalPosition = normalPosition;
         this.number = number;
     }
 
     void draw() {
         parent.pushMatrix();
+        parent.translate(normalPosition.x, normalPosition.y, normalPosition.z);
         parent.translate(position.x, position.y, position.z);
         parent.rotateX(-PApplet.PI / 2);
         parent.shape(shape);
