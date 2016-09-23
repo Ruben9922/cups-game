@@ -32,7 +32,9 @@ public class CupsGame extends PApplet {
             Cup cup = new Cup(this, cupShape, new PVector(CUP_SPACING * i, 0, 0), i);
             cups.add(cup);
         }
-        revealAllCups();
+//        revealAllCups();
+
+        cups.get(1).swap(cups.get(2));
     }
 
     public void draw() {
