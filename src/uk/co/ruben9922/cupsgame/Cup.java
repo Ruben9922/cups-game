@@ -49,8 +49,7 @@ class Cup {
 
     void reveal() {
         animationQueue.offer(new AnimationGroup(new Animation((v, t, b, c, d) -> v.set(0, Quad.easeInOut(t, b, c, d), 0), position, position.y, -100, 50)));
-
-        animationQueue.add(new AnimationGroup(new Animation((v, t, b, c, d) -> v.set(0, Quad.easeInOut(t, b, c, d), 0), position, -100, 100, 50)));
+        animationQueue.offer(new AnimationGroup(new Animation((v, t, b, c, d) -> v.set(0, Quad.easeInOut(t, b, c, d), 0), position, -100, 100, 50)));
     }
 
     void swap(Cup cup) {
