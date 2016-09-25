@@ -1,19 +1,21 @@
 package uk.co.ruben9922.cupsgame;
 
-import processing.core.PVector;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 class Animation {
     private EasingFunction easingFunction;
-    private PVector vector;
+    private Supplier<Float> getBeginningFunction;
+    private Consumer<Float> setValueFunction;
     private int time = 0;
     private float beginning;
     private float change;
     private int duration;
 
-    Animation(EasingFunction easingFunction, PVector vector, float beginning, float change, int duration) {
+    public Animation(EasingFunction easingFunction, Supplier<Float> getBeginningFunction, Consumer<Float> setValueFunction, float change, int duration) {
         this.easingFunction = easingFunction;
-        this.vector = vector;
-        this.beginning = beginning;
+        this.getBeginningFunction = getBeginningFunction;
+        this.setValueFunction = setValueFunction;
         this.change = change;
         this.duration = duration;
     }
@@ -22,16 +24,16 @@ class Animation {
         return easingFunction;
     }
 
-    public PVector getVector() {
-        return vector;
+    public Supplier<Float> getGetBeginningFunction() {
+        return getBeginningFunction;
+    }
+
+    public Consumer<Float> getSetValueFunction() {
+        return setValueFunction;
     }
 
     public int getTime() {
         return time;
-    }
-
-    public float getBeginning() {
-        return beginning;
     }
 
     public float getChange() {
@@ -42,14 +44,23 @@ class Animation {
         return duration;
     }
 
-    public void updateVectorComponents() {
-        easingFunction.setVectorComponents(vector, time, beginning, change, duration);
+    public void update() {
+        // If the animation is just beginning, set the beginning value using getBeginningFunction
+        if (time == 0) {
+            beginning = getBeginningFunction.get();
+        }
+
+        // Get current value using easing function then set the current value using the setValueFunction
+        float currentValue = easingFunction.getValue(time, beginning, change, duration);
+        setValueFunction.accept(currentValue);
+
+        // If not finished increment time
         if (!isFinished()) {
             time++;
         }
     }
 
     public boolean isFinished() {
-        return time >= duration;
+        return time >= duration + 1;
     }
 }

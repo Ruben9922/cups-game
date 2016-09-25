@@ -18,7 +18,7 @@ class AnimationGroup extends ArrayList<Animation> {
     public void updateAnimations() {
         for (int i = 0; i < size(); i++) {
             Animation animation = get(i);
-            animation.updateVectorComponents();
+            animation.update();
             if (animation.isFinished()) {
                 remove(i);
             }
