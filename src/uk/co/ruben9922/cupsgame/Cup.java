@@ -1,5 +1,6 @@
 package uk.co.ruben9922.cupsgame;
 
+import penner.easing.Bounce;
 import penner.easing.Quad;
 import processing.core.PApplet;
 import processing.core.PShape;
@@ -13,21 +14,28 @@ import java.util.function.Supplier;
 class Cup {
     private PApplet parent;
     private PShape shape;
-    private PVector normalPosition;
+    private PVector normalPosition; // TODO: Should be able to merge `normalPosition` and `position`
     private PVector position = new PVector(0, 0, 0);
-    private int number;
     private Queue<AnimationGroup> animationQueue = new ArrayDeque<>();
+    private Ball ball;
 
-    Cup(PApplet parent, PShape shape, PVector normalPosition, int number) {
+    Cup(PApplet parent, PShape shape, PVector normalPosition, Ball ball) {
         this.parent = parent;
         this.shape = shape;
         this.normalPosition = normalPosition;
-        this.number = number;
+        this.ball = ball;
+    }
+
+    Cup(PApplet parent, PShape shape, PVector normalPosition) {
+        this(parent, shape, normalPosition, null);
     }
 
     void draw() {
         parent.pushMatrix();
         parent.translate(normalPosition.x, normalPosition.y, normalPosition.z);
+        if (ball != null) {
+            ball.draw();
+        }
         parent.translate(position.x, position.y, position.z);
         parent.rotateX(-PApplet.PI / 2);
         parent.shape(shape);
@@ -48,10 +56,10 @@ class Cup {
     }
 
     void reveal() {
-        Supplier<Float> getPositionY = () -> normalPosition.y;
-        Consumer<Float> setPositionY = (y) -> normalPosition.y = y;
         animationQueue.offer(new AnimationGroup(new Animation(Quad::easeInOut, getPositionY, setPositionY, -100, 50)));
         animationQueue.offer(new AnimationGroup(new Animation(Quad::easeInOut, getPositionY, setPositionY, 100, 50)));
+        Supplier<Float> getPositionY = () -> position.y;
+        Consumer<Float> setPositionY = (y) -> position.y = y;
     }
 
     void swap(Cup cup) {
