@@ -56,10 +56,10 @@ class Cup {
     }
 
     void reveal() {
-        animationQueue.offer(new AnimationGroup(new Animation(Quad::easeInOut, getPositionY, setPositionY, -100, 50)));
-        animationQueue.offer(new AnimationGroup(new Animation(Quad::easeInOut, getPositionY, setPositionY, 100, 50)));
         Supplier<Float> getPositionY = () -> position.y;
         Consumer<Float> setPositionY = (y) -> position.y = y;
+        animationQueue.offer(new AnimationGroup(new Animation(Quad::easeInOut, getPositionY, setPositionY, -150, 50)));
+        animationQueue.offer(new AnimationGroup(new Animation(Bounce::easeOut, getPositionY, setPositionY, 150, 60)));
     }
 
     void swap(Cup cup) {

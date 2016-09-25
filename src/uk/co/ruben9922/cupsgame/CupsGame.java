@@ -65,7 +65,7 @@ public class CupsGame extends PApplet {
     }
 
     private void revealAllCups() {
-        final int CUP_DELAY = 20;
+        final int CUP_DELAY = 5;
         for (int i = 0; i < cups.size(); i++) {
             Cup cup = cups.get(i);
             delays.add(new Delay(cup::reveal, CUP_DELAY * i));
