@@ -40,7 +40,7 @@ class Animation {
         return change;
     }
 
-    public float getDuration() {
+    public int getDuration() {
         return duration;
     }
 

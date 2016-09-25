@@ -1,5 +1,5 @@
 package uk.co.ruben9922.cupsgame;
 
 interface EasingFunction {
-    float getValue(int time, float beginning, float change, float duration);
+    float getValue(int time, float beginning, float change, int duration);
 }
