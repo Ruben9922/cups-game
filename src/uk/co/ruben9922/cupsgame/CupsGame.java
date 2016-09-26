@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class CupsGame extends PApplet {
     private final int CUP_COUNT = 3;
     private final int CUP_SPACING = 200; // Distance between centre of top of each cup
+    private final int SWAP_COUNT = 10;
+    private final int SWAP_DELAY = 50;
 
     private ArrayList<Cup> cups = new ArrayList<>(CUP_COUNT);
     private ArrayList<Delay> delays = new ArrayList<>(CUP_COUNT); // TODO: Change so delays are stored with animations
@@ -34,17 +36,20 @@ public class CupsGame extends PApplet {
         PShape ballShape = createShape(SPHERE, SPHERE_RADIUS);
         ballShape.setStroke(false);
         ballShape.setFill(color(200));
-        int ballIndex = (int)Math.floor(Math.random() * CUP_COUNT); // Choose which cup to put ball under
+        int ballIndex = chooseCupIndex(); // Choose which cup to put ball under
         for (int i = 0; i < CUP_COUNT; i++) {
             float positionX = CUP_SPACING * i;
-            Cup cup = new Cup(this, cupShape, new PVector(positionX, 0, 0),
+            Cup cup = new Cup(this, cupShape, new PVector(positionX, 0, 0), i,
                     i == ballIndex ? new Ball(this, ballShape, new PVector(0, CUP_HEIGHT - SPHERE_RADIUS, 0)) : null);
             cups.add(cup);
         }
 
+        // TODO: Change so a queue is used instead to save calculating delays manually
         revealAllCups();
 
-//        cups.get(1).swap(cups.get(2));
+        delays.add(new Delay(this::performSwaps, 100));
+
+        delays.add(new Delay(this::revealAllCups, (SWAP_DELAY * SWAP_COUNT) + 100));
     }
 
     public void draw() {
@@ -66,9 +71,10 @@ public class CupsGame extends PApplet {
 
     private void revealAllCups() {
         final int CUP_DELAY = 5;
+
         for (int i = 0; i < cups.size(); i++) {
             Cup cup = cups.get(i);
-            delays.add(new Delay(cup::reveal, CUP_DELAY * i));
+            delays.add(new Delay(cup::reveal, CUP_DELAY * cup.getNumber()));
         }
     }
 
@@ -80,5 +86,25 @@ public class CupsGame extends PApplet {
                 delays.remove(i);
             }
         }
+    }
+
+    private void performSwaps() {
+        for (int i = 0; i < SWAP_COUNT; i++) {
+            int firstCupIndex = chooseCupIndex();
+            boolean alreadyChosen;
+            int secondCupIndex;
+            do {
+                secondCupIndex = chooseCupIndex();
+                alreadyChosen = (firstCupIndex == secondCupIndex);
+            } while (alreadyChosen); // Ensure indices are different - could change this
+
+            int s = secondCupIndex;
+            VoidNullaryFunction swapFunction = () -> cups.get(firstCupIndex).swap(cups.get(s));
+            delays.add(new Delay(swapFunction, SWAP_DELAY * i));
+        }
+    }
+
+    private int chooseCupIndex() {
+        return (int)Math.floor(Math.random() * cups.size());
     }
 }

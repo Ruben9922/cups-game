@@ -18,16 +18,22 @@ class Cup {
     private PVector position = new PVector(0, 0, 0);
     private Queue<AnimationGroup> animationQueue = new ArrayDeque<>();
     private Ball ball;
+    private int number;
 
-    Cup(PApplet parent, PShape shape, PVector normalPosition, Ball ball) {
+    Cup(PApplet parent, PShape shape, PVector normalPosition, int number, Ball ball) {
         this.parent = parent;
         this.shape = shape;
         this.normalPosition = normalPosition;
         this.ball = ball;
+        this.number = number;
     }
 
-    Cup(PApplet parent, PShape shape, PVector normalPosition) {
-        this(parent, shape, normalPosition, null);
+    Cup(PApplet parent, PShape shape, PVector normalPosition, int number) {
+        this(parent, shape, normalPosition, number, null);
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     void draw() {
@@ -65,6 +71,10 @@ class Cup {
     void swap(Cup cup) {
         final int duration = 10;
         final float positionXChange = (cup.normalPosition.x - normalPosition.x) / 2;
+
+        int tempNumber = this.number;
+        this.number = cup.number;
+        cup.number = tempNumber;
 
         Supplier<Float> getThisNormalPositionX = () -> normalPosition.x;
         Supplier<Float> getThisNormalPositionZ = () -> normalPosition.z;
