@@ -1,6 +1,6 @@
 package uk.co.ruben9922.cupsgame;
 
-class Delay {
+class Delay implements AnimationItem {
     private VoidNullaryFunction onFinish;
     private int time = 0;
     private int duration;
@@ -23,7 +23,7 @@ class Delay {
         return duration;
     }
 
-    public void updateTime() {
+    public void update() {
         // Increment time if not finished
         if (!isFinished()) {
             time++;

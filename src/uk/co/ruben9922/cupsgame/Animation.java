@@ -3,7 +3,7 @@ package uk.co.ruben9922.cupsgame;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-class Animation {
+class Animation implements AnimationItem {
     private EasingFunction easingFunction;
     private Supplier<Float> getBeginningFunction;
     private Consumer<Float> setValueFunction;

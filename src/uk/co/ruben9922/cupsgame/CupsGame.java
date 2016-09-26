@@ -81,7 +81,7 @@ public class CupsGame extends PApplet {
     private void updateDelays() {
         for (int i = 0; i < delays.size(); i++) {
             Delay delay = delays.get(i);
-            delay.updateTime();
+            delay.update();
             if (delay.isFinished()) {
                 delays.remove(i);
             }

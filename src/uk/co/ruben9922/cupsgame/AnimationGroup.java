@@ -2,7 +2,7 @@ package uk.co.ruben9922.cupsgame;
 
 import java.util.ArrayList;
 
-class AnimationGroup extends ArrayList<Animation> {
+class AnimationGroup extends ArrayList<Animation> implements AnimationItem {
     public AnimationGroup(Animation animation) {
         super(1);
         this.add(animation);
@@ -15,7 +15,7 @@ class AnimationGroup extends ArrayList<Animation> {
         }
     }
 
-    public void updateAnimations() {
+    public void update() {
         for (int i = 0; i < size(); i++) {
             Animation animation = get(i);
             animation.update();

@@ -16,7 +16,7 @@ class Cup {
     private PShape shape;
     private PVector normalPosition; // TODO: Should be able to merge `normalPosition` and `position`
     private PVector position = new PVector(0, 0, 0);
-    private Queue<AnimationGroup> animationQueue = new ArrayDeque<>();
+    private Queue<AnimationItem> animationQueue = new ArrayDeque<>();
     private Ball ball;
     private int number;
 
@@ -49,13 +49,11 @@ class Cup {
     }
 
     void updatePosition() {
-//        position.add(0, revealAnimation.getCurrentValue(), 0);
+        AnimationItem currentAnimationItem = animationQueue.peek();
+        if (currentAnimationItem != null) {
+            currentAnimationItem.update();
 
-        AnimationGroup currentAnimationGroup = animationQueue.peek();
-        if (currentAnimationGroup != null) {
-            currentAnimationGroup.updateAnimations();
-
-            if (currentAnimationGroup.isFinished()) {
+            if (currentAnimationItem.isFinished()) {
                 animationQueue.poll();
             }
         }
@@ -64,8 +62,8 @@ class Cup {
     void reveal() {
         Supplier<Float> getPositionY = () -> position.y;
         Consumer<Float> setPositionY = (y) -> position.y = y;
-        animationQueue.offer(new AnimationGroup(new Animation(Quad::easeInOut, getPositionY, setPositionY, -150, 50)));
-        animationQueue.offer(new AnimationGroup(new Animation(Bounce::easeOut, getPositionY, setPositionY, 150, 60)));
+        animationQueue.offer(new Animation(Quad::easeInOut, getPositionY, setPositionY, -150, 50));
+        animationQueue.offer(new Animation(Bounce::easeOut, getPositionY, setPositionY, 150, 60));
     }
 
     void swap(Cup cup) {
