@@ -3,7 +3,7 @@ import * as THREE from 'three';
 var scene = new THREE.Scene();
 
 var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 20, 90);
+camera.position.set(0, 30, 90);
 camera.lookAt(0, 0, 0);
 
 var renderer = new THREE.WebGLRenderer();
@@ -11,26 +11,34 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 var geometry = createCupGeometry();
-var material = new THREE.MeshLambertMaterial({color: 0xfd59d7});
+var material = new THREE.MeshLambertMaterial({color: 0xFF3300});
 var cup = new THREE.Mesh(geometry, material);
-cup.rotateOnAxis(new THREE.Vector3(1, 0, 0), Math.PI / 2);
 scene.add(cup);
 
 let cup1 = cup.clone();
-cup1.translateX(-40);
+cup1.translateX(-45);
 scene.add(cup1);
 
 let cup2 = cup.clone();
-cup2.translateX(40);
+cup2.translateX(45);
 scene.add(cup2);
 
-var light = new THREE.PointLight(0xFFFF00);
-light.position.set(10, 0, 25);
+var light = new THREE.AmbientLight(0xFFFFFF, 0.1);
 scene.add(light);
+
+var light1 = new THREE.PointLight(0xFFFFFF, 0.6);
+light1.position.set(0, -15, 50);
+scene.add(light1);
+
+var light2 = new THREE.PointLight(0xFFFFFF, 0.6);
+light2.position.set(50, 10, 10);
+// scene.add(light2);
 
 var render = function () {
   requestAnimationFrame(render);
-  // cup.geometry.computeVertexNormals();
+
+  cup.geometry.computeVertexNormals();
+
   renderer.render(scene, camera);
 };
 
@@ -90,10 +98,12 @@ function createCupGeometry() {
 
     // geometry.computeBoundingSphere();
     // geometry.computeFaceNormals();
-    geometry.computeVertexNormals();
+    // geometry.computeVertexNormals();
     geometry.verticesNeedUpdate = true;
     geometry.elementsNeedUpdate = true;
   }
+
+  geometry.rotateX(Math.PI / 2);
 
   return geometry;
 }
