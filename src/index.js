@@ -12,6 +12,7 @@ document.body.appendChild(renderer.domElement);
 var geometry = createCupGeometry();
 var material = new THREE.MeshLambertMaterial({color: 0xfd59d7});
 var cup = new THREE.Mesh(geometry, material);
+cup.rotateOnAxis(new THREE.Vector3(1, 0, 0), Math.PI / 2);
 scene.add(cup);
 
 var light = new THREE.PointLight(0xFFFF00);
@@ -20,9 +21,7 @@ scene.add(light);
 
 var render = function () {
   requestAnimationFrame(render);
-  cup.rotation.x += 0.01;
-  geometry.computeVertexNormals();
-
+  // cup.geometry.computeVertexNormals();
   renderer.render(scene, camera);
 };
 
@@ -82,7 +81,7 @@ function createCupGeometry() {
 
     // geometry.computeBoundingSphere();
     // geometry.computeFaceNormals();
-    // geometry.computeVertexNormals();
+    geometry.computeVertexNormals();
     geometry.verticesNeedUpdate = true;
     geometry.elementsNeedUpdate = true;
   }
