@@ -29,10 +29,10 @@ var render = function () {
 render();
 
 function createCupGeometry() {
-  let sides = 20;
-  let height = 20;
+  let sides = 50;
+  let height = 30;
   let topRadius = 10;
-  let bottomRadius = 20;
+  let bottomRadius = 15;
 
   // Compute vertex positions of unit circle
   let centralAngle = 2 * Math.PI / sides;
