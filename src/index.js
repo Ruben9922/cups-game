@@ -52,33 +52,34 @@ function createCupGeometry() {
   let bottomVertices = unitCircleVertices.map(v => v.clone().multiplyScalar(bottomRadius).add(new THREE.Vector3(0, 0, height / 2)));
 
   // Add vertices to geometry
-  // Create and add faces to geometry
   let geometry = new THREE.Geometry();
-  geometry.vertices.push(new THREE.Vector3(0, 0, -height / 2));
   for (let i = 0; i < sides; i++) {
-    let topLeft = topVertices[(i + 1) % sides];
-    let topRight = topVertices[i];
-    let bottomLeft = bottomVertices[(i + 1) % sides];
-    let bottomRight = bottomVertices[i];
 
-    geometry.vertices.push(topLeft, topRight, bottomLeft, bottomRight);
+    let top = topVertices[i];
+    let bottom = bottomVertices[i];
 
-    let topLeftIndex = geometry.vertices.length - 4;
-    let topRightIndex = geometry.vertices.length - 3;
-    let bottomLeftIndex = geometry.vertices.length - 2;
-    let bottomRightIndex = geometry.vertices.length - 1;
+    geometry.vertices.push(top, bottom);
+  }
+  geometry.vertices.push(new THREE.Vector3(0, 0, -height / 2));
+
+  // Create and add faces to geometry
+  for (let i = 0; i < sides; i++) {
+    let topPrevIndex = (i * 2) % (sides * 2);
+    let bottomPrevIndex = ((i * 2) + 1) % (sides * 2);
+    let topIndex = ((i * 2) + 2) % (sides * 2);
+    let bottomIndex = ((i * 2) + 3) % (sides * 2);
 
     // Faces for side
     geometry.faces.push(
-      new THREE.Face3(topLeftIndex, bottomLeftIndex, topRightIndex),
-      new THREE.Face3(bottomRightIndex, topRightIndex, bottomLeftIndex)
+      new THREE.Face3(topPrevIndex, bottomIndex, bottomPrevIndex),
+      new THREE.Face3(bottomIndex, topPrevIndex, topIndex)
     );
 
     // Face for top
     geometry.faces.push(
-      new THREE.Face3(0, topLeftIndex, topRightIndex)
+      new THREE.Face3(geometry.vertices.length - 1, topIndex, topPrevIndex)
     );
-    geometry.computeBoundingSphere();
+    // geometry.computeBoundingSphere();
     // geometry.computeFaceNormals();
     // geometry.computeVertexNormals();
     geometry.verticesNeedUpdate = true;
