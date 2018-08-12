@@ -15,6 +15,14 @@ var cup = new THREE.Mesh(geometry, material);
 cup.rotateOnAxis(new THREE.Vector3(1, 0, 0), Math.PI / 2);
 scene.add(cup);
 
+let cup1 = cup.clone();
+cup1.translateX(-40);
+scene.add(cup1);
+
+let cup2 = cup.clone();
+cup2.translateX(40);
+scene.add(cup2);
+
 var light = new THREE.PointLight(0xFFFF00);
 light.position.set(10, 0, 25);
 scene.add(light);
