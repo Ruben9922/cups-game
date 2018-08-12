@@ -79,14 +79,13 @@ function createCupGeometry() {
     geometry.faces.push(
       new THREE.Face3(geometry.vertices.length - 1, topIndex, topPrevIndex)
     );
+
     // geometry.computeBoundingSphere();
     // geometry.computeFaceNormals();
     // geometry.computeVertexNormals();
     geometry.verticesNeedUpdate = true;
     geometry.elementsNeedUpdate = true;
   }
-
-  console.log(geometry);
 
   return geometry;
 }
