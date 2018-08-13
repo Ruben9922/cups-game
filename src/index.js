@@ -47,8 +47,6 @@ var render = function () {
   let delta = clock.getDelta();
   mixer.update(delta);
 
-  cup.geometry.computeVertexNormals();
-
   renderer.render(scene, camera);
 };
 
@@ -108,7 +106,7 @@ function createCupGeometry() {
 
     // geometry.computeBoundingSphere();
     // geometry.computeFaceNormals();
-    // geometry.computeVertexNormals();
+    geometry.computeVertexNormals();
     geometry.verticesNeedUpdate = true;
     geometry.elementsNeedUpdate = true;
   }
