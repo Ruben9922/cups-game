@@ -12,16 +12,17 @@ document.body.appendChild(renderer.domElement);
 
 let geometry = createCupGeometry();
 let material = new THREE.MeshLambertMaterial({color: 0xFF3300});
-let cup = new THREE.Mesh(geometry, material);
-scene.add(cup);
+let cupMesh = new THREE.Mesh(geometry, material);
 
-let cup1 = cup.clone();
-cup1.translateX(-45);
-scene.add(cup1);
-
-let cup2 = cup.clone();
-cup2.translateX(45);
-scene.add(cup2);
+const cupSpacing = 45;
+const cupCount = 3;
+let cups = [];
+for (let i = 0; i < cupCount; i++) {
+  let cup = cupMesh.clone();
+  cup.translateX(cupSpacing * (i - ((cupCount - 1) / 2)));
+  scene.add(cup);
+  cups.push(cup);
+}
 
 let light = new THREE.AmbientLight(0xFFFFFF, 0.1);
 scene.add(light);
@@ -33,18 +34,12 @@ scene.add(light1);
 let clock = new THREE.Clock();
 let mixer = new THREE.AnimationMixer(scene);
 
-let clip = createCupLiftAnimation(cup.position);
-let action = mixer.clipAction(clip, cup);
-action.setLoop(THREE.LoopOnce);
-action.startAt(0.3).play();
-let clip1 = createCupLiftAnimation(cup1.position);
-let action1 = mixer.clipAction(clip1, cup1);
-action1.setLoop(THREE.LoopOnce);
-action1.play();
-let clip2 = createCupLiftAnimation(cup2.position);
-let action2 = mixer.clipAction(clip2, cup2);
-action2.setLoop(THREE.LoopOnce);
-action2.startAt(0.6).play();
+for (const [i, cup] of cups.entries()) {
+  let clip = createCupLiftAnimation(cup.position);
+  let action = mixer.clipAction(clip, cup);
+  action.setLoop(THREE.LoopOnce);
+  action.startAt(i * 0.3).play();
+}
 
 let render = function () {
   requestAnimationFrame(render);
