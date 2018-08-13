@@ -1,18 +1,18 @@
 import * as THREE from 'three';
 
-var scene = new THREE.Scene();
+let scene = new THREE.Scene();
 
-var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+let camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(0, 30, 90);
 camera.lookAt(0, 0, 0);
 
-var renderer = new THREE.WebGLRenderer();
+let renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-var geometry = createCupGeometry();
-var material = new THREE.MeshLambertMaterial({color: 0xFF3300});
-var cup = new THREE.Mesh(geometry, material);
+let geometry = createCupGeometry();
+let material = new THREE.MeshLambertMaterial({color: 0xFF3300});
+let cup = new THREE.Mesh(geometry, material);
 scene.add(cup);
 
 let cup1 = cup.clone();
@@ -23,34 +23,34 @@ let cup2 = cup.clone();
 cup2.translateX(45);
 scene.add(cup2);
 
-var light = new THREE.AmbientLight(0xFFFFFF, 0.1);
+let light = new THREE.AmbientLight(0xFFFFFF, 0.1);
 scene.add(light);
 
-var light1 = new THREE.PointLight(0xFFFFFF, 0.6);
+let light1 = new THREE.PointLight(0xFFFFFF, 0.6);
 light1.position.set(0, -15, 50);
 scene.add(light1);
 
-var light2 = new THREE.PointLight(0xFFFFFF, 0.6);
+let light2 = new THREE.PointLight(0xFFFFFF, 0.6);
 light2.position.set(50, 10, 10);
 // scene.add(light2);
 
-var clock = new THREE.Clock();
-var mixer = new THREE.AnimationMixer(scene);
+let clock = new THREE.Clock();
+let mixer = new THREE.AnimationMixer(scene);
 
-var clip = createCupLiftAnimation(cup.position);
-var action = mixer.clipAction(clip, cup);
+let clip = createCupLiftAnimation(cup.position);
+let action = mixer.clipAction(clip, cup);
 action.setLoop(THREE.LoopOnce);
 action.startAt(0.3).play();
-var clip1 = createCupLiftAnimation(cup1.position);
-var action1 = mixer.clipAction(clip1, cup1);
+let clip1 = createCupLiftAnimation(cup1.position);
+let action1 = mixer.clipAction(clip1, cup1);
 action1.setLoop(THREE.LoopOnce);
 action1.play();
-var clip2 = createCupLiftAnimation(cup2.position);
-var action2 = mixer.clipAction(clip2, cup2);
+let clip2 = createCupLiftAnimation(cup2.position);
+let action2 = mixer.clipAction(clip2, cup2);
 action2.setLoop(THREE.LoopOnce);
 action2.startAt(0.6).play();
 
-var render = function () {
+let render = function () {
   requestAnimationFrame(render);
 
   let delta = clock.getDelta();
