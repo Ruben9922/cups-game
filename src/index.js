@@ -37,7 +37,9 @@ light2.position.set(50, 10, 10);
 var clip = createCupLiftAnimation();
 var mixer = new THREE.AnimationMixer(cup);
 var clock = new THREE.Clock();
-mixer.clipAction(clip).play();
+var action = mixer.clipAction(clip);
+action.setLoop(THREE.LoopOnce);
+action.play();
 
 var render = function () {
   requestAnimationFrame(render);
