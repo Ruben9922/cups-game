@@ -30,10 +30,6 @@ let light1 = new THREE.PointLight(0xFFFFFF, 0.6);
 light1.position.set(0, -15, 50);
 scene.add(light1);
 
-let light2 = new THREE.PointLight(0xFFFFFF, 0.6);
-light2.position.set(50, 10, 10);
-// scene.add(light2);
-
 let clock = new THREE.Clock();
 let mixer = new THREE.AnimationMixer(scene);
 
