@@ -35,19 +35,18 @@ light2.position.set(50, 10, 10);
 // scene.add(light2);
 
 var clock = new THREE.Clock();
+var mixer = new THREE.AnimationMixer(scene);
+
 var clip = createCupLiftAnimation(cup.position);
-var mixer = new THREE.AnimationMixer(cup);
-var action = mixer.clipAction(clip);
+var action = mixer.clipAction(clip, cup);
 action.setLoop(THREE.LoopOnce);
 action.startAt(0.3).play();
 var clip1 = createCupLiftAnimation(cup1.position);
-var mixer1 = new THREE.AnimationMixer(cup1);
-var action1 = mixer1.clipAction(clip1);
+var action1 = mixer.clipAction(clip1, cup1);
 action1.setLoop(THREE.LoopOnce);
 action1.play();
 var clip2 = createCupLiftAnimation(cup2.position);
-var mixer2 = new THREE.AnimationMixer(cup2);
-var action2 = mixer2.clipAction(clip2);
+var action2 = mixer.clipAction(clip2, cup2);
 action2.setLoop(THREE.LoopOnce);
 action2.startAt(0.6).play();
 
@@ -56,8 +55,6 @@ var render = function () {
 
   let delta = clock.getDelta();
   mixer.update(delta);
-  mixer1.update(delta);
-  mixer2.update(delta);
 
   renderer.render(scene, camera);
 };
