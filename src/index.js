@@ -34,18 +34,30 @@ var light2 = new THREE.PointLight(0xFFFFFF, 0.6);
 light2.position.set(50, 10, 10);
 // scene.add(light2);
 
-var clip = createCupLiftAnimation();
-var mixer = new THREE.AnimationMixer(cup);
 var clock = new THREE.Clock();
+var clip = createCupLiftAnimation(cup.position);
+var mixer = new THREE.AnimationMixer(cup);
 var action = mixer.clipAction(clip);
 action.setLoop(THREE.LoopOnce);
-action.play();
+action.startAt(0.3).play();
+var clip1 = createCupLiftAnimation(cup1.position);
+var mixer1 = new THREE.AnimationMixer(cup1);
+var action1 = mixer1.clipAction(clip1);
+action1.setLoop(THREE.LoopOnce);
+action1.play();
+var clip2 = createCupLiftAnimation(cup2.position);
+var mixer2 = new THREE.AnimationMixer(cup2);
+var action2 = mixer2.clipAction(clip2);
+action2.setLoop(THREE.LoopOnce);
+action2.startAt(0.6).play();
 
 var render = function () {
   requestAnimationFrame(render);
 
   let delta = clock.getDelta();
   mixer.update(delta);
+  mixer1.update(delta);
+  mixer2.update(delta);
 
   renderer.render(scene, camera);
 };
@@ -116,12 +128,15 @@ function createCupGeometry() {
   return geometry;
 }
 
-function createCupLiftAnimation() {
+function createCupLiftAnimation(currentPosition) {
   let duration = 2;
 
   let name = '.position';
   let times = [0, duration / 2, duration];
-  let values = [0, 0, 0, 0, 20, 0, 0, 0, 0];
+  let values = [];
+  currentPosition.toArray(values, values.length);
+  currentPosition.clone().add(new THREE.Vector3(0, 20, 0)).toArray(values, values.length);
+  currentPosition.toArray(values, values.length);
 
   let track = new THREE.VectorKeyframeTrack(name, times, values, THREE.InterpolateSmooth);
 
