@@ -34,8 +34,16 @@ var light2 = new THREE.PointLight(0xFFFFFF, 0.6);
 light2.position.set(50, 10, 10);
 // scene.add(light2);
 
+var clip = createCupLiftAnimation();
+var mixer = new THREE.AnimationMixer(cup);
+var clock = new THREE.Clock();
+mixer.clipAction(clip).play();
+
 var render = function () {
   requestAnimationFrame(render);
+
+  let delta = clock.getDelta();
+  mixer.update(delta);
 
   cup.geometry.computeVertexNormals();
 
@@ -106,4 +114,17 @@ function createCupGeometry() {
   geometry.rotateX(Math.PI / 2);
 
   return geometry;
+}
+
+function createCupLiftAnimation() {
+  let duration = 2;
+
+  let name = '.position';
+  let times = [0, duration / 2, duration];
+  let values = [0, 0, 0, 0, 20, 0, 0, 0, 0];
+
+  let track = new THREE.VectorKeyframeTrack(name, times, values, THREE.InterpolateSmooth);
+
+  let clip = new THREE.AnimationClip(null, duration, [track]);
+  return clip;
 }
