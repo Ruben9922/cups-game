@@ -37,14 +37,14 @@ scene.add(floorMesh);
 let light = new THREE.AmbientLight(0xFFFFFF, 0.1);
 scene.add(light);
 
-let sphereGeometry = new THREE.SphereGeometry(5, 32, 32);
-let sphereMaterial = new THREE.MeshPhongMaterial({color: 0xffffff});
-let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-sphere.castShadow = true;
+let ballGeometry = new THREE.SphereGeometry(5, 32, 32);
+let ballMaterial = new THREE.MeshPhongMaterial({color: 0xffffff});
+let ball = new THREE.Mesh(ballGeometry, ballMaterial);
+ball.castShadow = true;
 let cupContainingBall = cups[Math.floor(Math.random() * cups.length)];
-sphere.position.copy(cupContainingBall.position);
-sphere.translateY(-10);
-scene.add(sphere);
+ball.position.copy(cupContainingBall.position);
+ball.translateY(-10);
+scene.add(ball);
 
 let light1 = new THREE.SpotLight(0xFFFFFF, 0.5, 0, Math.PI / 4, 0.9, 2);
 light1.castShadow = true;
