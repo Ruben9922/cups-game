@@ -70,7 +70,7 @@ for (const [i, cup] of cups.entries()) {
   let clip = createCupLiftAnimation(cup.position);
   let action = mixer.clipAction(clip, cup);
   action.setLoop(THREE.LoopOnce);
-  action.startAt(i * 0.3).play();
+  action.startAt(i * 0.25).play();
 }
 
 let render = function () {
@@ -155,7 +155,7 @@ function createCupLiftAnimation(currentPosition) {
   let times = [0, duration / 2, duration];
   let values = [];
   currentPosition.toArray(values, values.length);
-  currentPosition.clone().add(new THREE.Vector3(0, 20, 0)).toArray(values, values.length);
+  currentPosition.clone().add(new THREE.Vector3(0, 30, 0)).toArray(values, values.length);
   currentPosition.toArray(values, values.length);
 
   let track = new THREE.VectorKeyframeTrack(name, times, values, THREE.InterpolateSmooth);
