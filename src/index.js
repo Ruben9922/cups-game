@@ -7,6 +7,8 @@ camera.position.set(0, 30, 90);
 camera.lookAt(0, 0, 0);
 
 let renderer = new THREE.WebGLRenderer();
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
@@ -35,9 +37,31 @@ scene.add(floorMesh);
 let light = new THREE.AmbientLight(0xFFFFFF, 0.1);
 scene.add(light);
 
-let light1 = new THREE.PointLight(0xFFFFFF, 0.6);
-light1.position.set(0, -15, 50);
+var sphereGeometry = new THREE.SphereBufferGeometry(5, 32, 32);
+var sphereMaterial = new THREE.MeshPhongMaterial({color: 0xffffff});
+var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphere.castShadow = true;
+sphere.position.set(25, -10, 5);
+scene.add(sphere);
+
+let light1 = new THREE.SpotLight(0xFFFFFF, 0.5, 0, Math.PI / 4, 0.9, 2);
+light1.castShadow = true;
+
+light1.shadow.mapSize.width = 1024;
+light1.shadow.mapSize.height = 1024;
+light1.shadow.camera.near = 0.5;
+light1.shadow.camera.far = 500;
+
+let light2 = light1.clone();
+light1.position.set(-50, 20, 50);
+light1.target.position.set(-20, 5, 0);
+scene.add(light1.target);
+light2.position.set(50, 20, 50);
+light2.target.position.set(20, 5, 0);
+scene.add(light2.target);
 scene.add(light1);
+scene.add(light2);
+
 
 let clock = new THREE.Clock();
 let mixer = new THREE.AnimationMixer(scene);
