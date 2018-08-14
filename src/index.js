@@ -37,9 +37,9 @@ scene.add(floorMesh);
 let light = new THREE.AmbientLight(0xFFFFFF, 0.1);
 scene.add(light);
 
-var sphereGeometry = new THREE.SphereGeometry(5, 32, 32);
-var sphereMaterial = new THREE.MeshPhongMaterial({color: 0xffffff});
-var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+let sphereGeometry = new THREE.SphereGeometry(5, 32, 32);
+let sphereMaterial = new THREE.MeshPhongMaterial({color: 0xffffff});
+let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 sphere.castShadow = true;
 sphere.position.set(25, -10, 5);
 scene.add(sphere);
