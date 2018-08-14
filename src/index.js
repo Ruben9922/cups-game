@@ -11,7 +11,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 let cupGeometry = createCupGeometry();
-let cupMaterial = new THREE.MeshLambertMaterial({color: 0xFF3300});
+let cupMaterial = new THREE.MeshPhongMaterial({color: 0xFF3300});
 let cupMesh = new THREE.Mesh(cupGeometry, cupMaterial);
 cupMesh.castShadow = true;
 
@@ -26,7 +26,7 @@ for (let i = 0; i < cupCount; i++) {
 }
 
 let floorGeometry = new THREE.BoxGeometry(500, 5, 50);
-let floorMaterial = new THREE.MeshLambertMaterial({color: 0x555555});
+let floorMaterial = new THREE.MeshPhongMaterial({color: 0x555555});
 let floorMesh = new THREE.Mesh(floorGeometry, floorMaterial);
 floorMesh.receiveShadow = true;
 floorMesh.translateY(-((30 / 2) + (10 / 2)));
