@@ -41,7 +41,9 @@ let sphereGeometry = new THREE.SphereGeometry(5, 32, 32);
 let sphereMaterial = new THREE.MeshPhongMaterial({color: 0xffffff});
 let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 sphere.castShadow = true;
-sphere.position.set(25, -10, 5);
+let cupContainingBall = cups[Math.floor(Math.random() * cups.length)];
+sphere.position.copy(cupContainingBall.position);
+sphere.translateY(-10);
 scene.add(sphere);
 
 let light1 = new THREE.SpotLight(0xFFFFFF, 0.5, 0, Math.PI / 4, 0.9, 2);
