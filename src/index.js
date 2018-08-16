@@ -75,6 +75,31 @@ for (const [i, cup] of cups.entries()) {
   action.startAt(i * 0.25).play();
 }
 
+let swaps = [];
+const swapCount = 30;
+for (let i = 0; i < swapCount; i++) {
+  let cup1Index = Math.floor(Math.random() * cups.length);
+  let cup2Index = Math.floor(Math.random() * (cups.length - 1));
+  if (cup2Index >= cup1Index) {
+    cup2Index++;
+  }
+  let leftCupIndex = Math.min(cup1Index, cup2Index);
+  let rightCupIndex = Math.max(cup1Index, cup2Index);
+
+  swaps.push([leftCupIndex, rightCupIndex]);
+
+  let leftCup = cups[leftCupIndex];
+  let rightCup = cups[rightCupIndex];
+  let leftCupClip = createCupSwapAnimation(leftCup.position, rightCup.position, new THREE.Vector3(0, 0, -30));
+  let leftCupAction = mixer.clipAction(leftCupClip, leftCup);
+  leftCupAction.setLoop(THREE.LoopOnce);
+  leftCupAction.startAt(2.75 + (i * 0.75)).play();
+  let rightCupClip = createCupSwapAnimation(rightCup.position, leftCup.position, new THREE.Vector3(0, 0, 30));
+  let rightCupAction = mixer.clipAction(rightCupClip, rightCup);
+  rightCupAction.setLoop(THREE.LoopOnce);
+  rightCupAction.startAt(2.75 + (i * 0.75)).play();
+}
+
 let render = function () {
   requestAnimationFrame(render);
 
@@ -159,6 +184,23 @@ function createCupLiftAnimation(currentPosition) {
   currentPosition.toArray(values, values.length);
   currentPosition.clone().add(new THREE.Vector3(0, 30, 0)).toArray(values, values.length);
   currentPosition.toArray(values, values.length);
+
+  let track = new THREE.VectorKeyframeTrack(name, times, values, THREE.InterpolateSmooth);
+
+  let clip = new THREE.AnimationClip(null, duration, [track]);
+  return clip;
+}
+
+function createCupSwapAnimation(currentPosition, newPosition, halfwayDisplacement) {
+  let duration = 0.5;
+
+  let name = '.position';
+  let times = [0, duration / 2, duration];
+  let values = [];
+  currentPosition.toArray(values, values.length);
+  let halfwayPosition = currentPosition.clone().lerp(newPosition, 0.5).add(halfwayDisplacement);
+  halfwayPosition.toArray(values, values.length);
+  newPosition.toArray(values, values.length);
 
   let track = new THREE.VectorKeyframeTrack(name, times, values, THREE.InterpolateSmooth);
 
