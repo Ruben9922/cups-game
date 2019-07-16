@@ -51,6 +51,6 @@
     "webpack-merge": "4.1.0"
   },
   "dependencies": {
-    "three": "^0.95.0"
+    "babylonjs": "^4.0.3"
   }
 }
