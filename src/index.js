@@ -23,12 +23,17 @@ let createScene = function () {
   // Create a basic light, aiming 0, 1, 0 - meaning, to the sky
   let light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
 
+  let latheMaterial = new BABYLON.StandardMaterial("latheMaterial", scene);
+  latheMaterial.diffuseColor = new BABYLON.Color3(1, 0.2, 0);
+  latheMaterial.specularColor = new BABYLON.Color3(1, 1, 1);
+
   var latheShape = [
     new BABYLON.Vector3(1.5, 0, 0),
     new BABYLON.Vector3(1, 3, 0),
   ];
 
   var lathe = BABYLON.MeshBuilder.CreateLathe('lathe', {shape: latheShape, cap: BABYLON.Mesh.CAP_END}, scene);
+  lathe.material = latheMaterial;
 
   let ground = BABYLON.MeshBuilder.CreateGround('ground', {width: 15, height: 4.5}, scene);
 
