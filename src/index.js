@@ -30,7 +30,7 @@ let createScene = function () {
 
   var lathe = BABYLON.MeshBuilder.CreateLathe('lathe', {shape: latheShape, cap: BABYLON.Mesh.CAP_END}, scene);
 
-  let ground = BABYLON.MeshBuilder.CreateGround('ground', {width: 10, height: 4}, scene);
+  let ground = BABYLON.MeshBuilder.CreateGround('ground', {width: 15, height: 4.5}, scene);
 
   // Return the created scene
   return scene;
