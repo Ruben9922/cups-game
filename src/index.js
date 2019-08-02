@@ -12,7 +12,7 @@ let createScene = function () {
   let scene = new BABYLON.Scene(engine);
 
   let camera = new BABYLON.ArcRotateCamera('camera1', 0, 0, 0, new BABYLON.Vector3.Zero(), scene);
-  camera.setPosition(new BABYLON.Vector3(0, 5, 10));
+  camera.setPosition(new BABYLON.Vector3(0, 30, 90));
   camera.fov = Math.PI / 3;
 
   // Create a basic light, aiming 0, 1, 0 - meaning, to the sky
